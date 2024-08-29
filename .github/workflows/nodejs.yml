@@ -27,7 +27,10 @@ jobs:
             echo "Nested folder node43_ci_cd exists. Removing it..."
             rm -rf node43_ci_cd/node43_ci_cd
           fi
-
+      - name: Print current path using pwd
+        run: |
+          echo "Current path is:"
+          pwd
       - name: Remove outer node43_ci_cd if exists and nested directory was found
         run: |
           if [ -d "node43_ci_cd" ] && [ ! -d "node43_ci_cd/.git" ]; then
