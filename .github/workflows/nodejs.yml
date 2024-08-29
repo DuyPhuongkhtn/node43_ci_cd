@@ -1,0 +1,30 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+# This workflow integrates njsscan with GitHub's Code Scanning feature
+# nodejsscan is a static security code scanner that finds insecure code patterns in your Node.js applications
+
+name: njsscan sarif
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    # The branches below must be a subset of the branches above
+    branches: [ "main" ]
+
+jobs:
+  build:
+    # định nghĩa môi trường mà job sẽ chạy
+    # Remove folder node43 nếu folder đó đã tồn tại
+    runs-on: self-hosted
+    steps:
+      - name: Clone source code from github
+        run: |
+          echo "Start"
+          rm -rf node43
+          git clone https://github.com/DuyPhuongkhtn/node43_ci_cd.git
+          cd node43_ci_cd
+          echo "Done"
