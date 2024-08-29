@@ -47,5 +47,6 @@ jobs:
           fi
       - name: Build source BE
         run: |
+          cd node43_ci_cd
           sudo docker build . -t node43
 
