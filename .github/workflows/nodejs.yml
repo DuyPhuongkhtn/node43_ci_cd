@@ -47,5 +47,5 @@ jobs:
           fi
       - name: Build source BE
         run: |
-          echo "Done"
+          docker build . -t node43
 
