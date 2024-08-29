@@ -47,6 +47,10 @@ jobs:
           fi
       - name: Build source BE
         run: |
+          # stop và remove container đã tồn tại
+          # remove image
+          # build image mới
+          # tạo container mới
           cd node43_ci_cd
           sudo docker build . -t node43
           sudo docker run -d -p 8080:8080 --name node43 node43
