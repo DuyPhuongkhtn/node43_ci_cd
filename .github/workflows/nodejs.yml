@@ -39,10 +39,8 @@ jobs:
           ./build_mysql.sh
       - name: Set up MySQL
         run: |
-          echo "Starting MySQL container..."
-          sudo docker run --name mysql-container -e MYSQL_ROOT_PASSWORD=${{secrets.MYSQL_ROOT_PASSWORD}} -d mysql:latest
           echo "Waiting for MySQL to be ready..."
-          until sudo docker exec mysql-container mysqladmin ping -h "${{secrets.SERVER_HOST}}" --silent; do
+          until sudo docker exec mysql mysqladmin ping -h "${{secrets.SERVER_HOST}}" --silent; do
             echo "Waiting for database connection..."
             sleep 2
           done
@@ -50,10 +48,10 @@ jobs:
       - name: Check and create database in MySQL
         run: |
           echo "Checking if database exists..."
-          DB_EXISTS=$(sudo docker exec mysql-container mysql -uroot -p${{secrets.MYSQL_ROOT_PASSWORD}} -sse "SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME='node43'")
+          DB_EXISTS=$(sudo docker exec mysql mysql -uroot -p${{secrets.MYSQL_ROOT_PASSWORD}} -sse "SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME='node43'")
           if [ -z "$DB_EXISTS" ]; then
             echo "Database does not exist. Creating database..."
-            sudo docker exec mysql-container mysql -uroot -p${{secrets.MYSQL_ROOT_PASSWORD}} -e "CREATE DATABASE node43;"
+            sudo docker exec mysql mysql -uroot -p${{secrets.MYSQL_ROOT_PASSWORD}} -e "CREATE DATABASE node43;"
           else
             echo "Database already exists. Skipping creation."
           fi
