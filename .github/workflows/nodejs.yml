@@ -24,6 +24,7 @@ jobs:
       - name: Remove nested node43_ci_cd if it exists
         run: |
           pwd
+          cd ../../
           if [ -d "node43_ci_cd/node43_ci_cd" ]; then
             echo "Nested folder node43_ci_cd exists. Removing it..."
             sudo rm -rf node43_ci_cd/node43_ci_cd
