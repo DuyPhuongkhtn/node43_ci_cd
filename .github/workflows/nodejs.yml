@@ -38,7 +38,13 @@ jobs:
           echo "Done"
       - name: Build mysql
         run: |
-          docker run -d --name $CONTAINER_NAME -e MYSQL_ROOT_PASSWORD=123456 -p 3306:3306 mysql:latest
+          CONTAINER_NAME=mysql
+          if [ "$(docker ps -a -q -f -name=^${CONTAINER_NAME}$)" ];then
+              echo "Container $CONTAINER_NAME exists"
+          else
+              echo "Build container mysql"
+              docker run -d --name $CONTAINER_NAME -e MYSQL_ROOT_PASSWORD=123456 -p 3306:3306 mysql:latest
+          fi
       - name: Build source BE
         run: |
           echo "Done"
