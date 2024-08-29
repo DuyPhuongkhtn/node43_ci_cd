@@ -21,18 +21,23 @@ jobs:
     # Remove folder node43 nếu folder đó đã tồn tại
     runs-on: self-hosted
     steps:
+      - name: Check if folder source BE exists
+        run: |
+          if [ -d "mode43_ci_cd" ];then
+            echo "Skip"
+          else
+            echo "Clone source code"
+            git clone https://github.com/DuyPhuongkhtn/node43_ci_cd.git
+            cd node43_ci_cd
+          fi
       - name: Clone source code from github
         run: |
           echo "Start"
-          rm -rf node43_ci_cd
-          git clone https://github.com/DuyPhuongkhtn/node43_ci_cd.git
-          cd node43_ci_cd
+          git pull https://github.com/DuyPhuongkhtn/node43_ci_cd.git
           echo "Done"
       - name: Build mysql
         run: |
-          pwd
-          sudo chmod +x .github/workflows/build_mysql.sh
-          .github/workflows/build_mysql.sh
+          docker run -d --name $CONTAINER_NAME -e MYSQL_ROOT_PASSWORD=123456 -p 3306:3306 mysql:latest
       - name: Build source BE
         run: |
           echo "Done"
