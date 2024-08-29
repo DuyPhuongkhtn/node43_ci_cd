@@ -38,14 +38,9 @@ jobs:
           echo "Done"
       - name: Build mysql
         run: |
-          CONTAINER_NAME=${{secrets.CONTAINER_NAME_SQL}}
-          echo "get container name mysql $CONTAINER_NAME"
-          if [ "$(sudo docker ps -a -q -f name=^${CONTAINER_NAME}$)" ];then
-              echo "Container $CONTAINER_NAME exists"
-          else
-              echo "Build container mysql"
-              sudo docker run -d --name $CONTAINER_NAME -e MYSQL_ROOT_PASSWORD=123456 -p 3306:3306 mysql:latest
-          fi
+          cd node_ci_cd/.github/workflows
+          sudo chmod +x build_mysql.sh
+          build_mysql.sh
       - name: Build source BE
         run: |
           # stop và remove container đã tồn tại
