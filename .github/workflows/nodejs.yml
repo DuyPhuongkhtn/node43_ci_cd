@@ -28,15 +28,22 @@ jobs:
             rm -rf node43_ci_cd/node43_ci_cd
           fi
 
-      - name: Clone or Pull source code from GitHub
+      - name: Remove outer node43_ci_cd if exists and nested directory was found
         run: |
-          if [ -d "node43_ci_cd" ]; then
-            echo "Folder node43_ci_cd exists. Pulling latest changes..."
-            cd node43_ci_cd
-            git pull https://github.com/DuyPhuongkhtn/node43_ci_cd.git
-          else
+          if [ -d "node43_ci_cd" ] && [ ! -d "node43_ci_cd/.git" ]; then
+            echo "Outer node43_ci_cd folder exists but it is not a valid git repository. Removing it..."
+            rm -rf node43_ci_cd
+          fi
+
+      - name: Clone source code from GitHub
+        run: |
+          if [ ! -d "node43_ci_cd" ]; then
             echo "Folder node43_ci_cd does not exist. Cloning repository..."
             git clone https://github.com/DuyPhuongkhtn/node43_ci_cd.git
+          else
+            echo "Folder node43_ci_cd exists. Pulling latest changes..."
+            cd node43_ci_cd
+            git pull origin main
           fi
 
       - name: Build MySQL
