@@ -38,7 +38,8 @@ jobs:
           echo "Done"
       - name: Build mysql
         run: |
-          CONTAINER_NAME=mysql
+          CONTAINER_NAME=${{secrets.CONTAINER_NAME_SQL}}
+          echo "get container name mysql $CONTAINER_NAME"
           if [ "$(sudo docker ps -a -q -f name=^${CONTAINER_NAME}$)" ];then
               echo "Container $CONTAINER_NAME exists"
           else
