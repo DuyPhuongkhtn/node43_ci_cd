@@ -23,11 +23,7 @@ jobs:
     steps:
       - name: Remove nested node43_ci_cd if it exists
         run: |
-          cd ../../
-          if [ -d "node43_ci_cd/node43_ci_cd" ]; then
-            echo "Nested folder node43_ci_cd exists. Removing it..."
-            sudo rm -rf node43_ci_cd/node43_ci_cd
-          fi
+          pwd
       - name: Clone source code from GitHub
         run: |
           pwd
