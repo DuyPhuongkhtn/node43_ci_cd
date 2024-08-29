@@ -33,6 +33,7 @@ jobs:
       - name: Clone source code from github
         run: |
           echo "Start"
+          cd node43_ci_cd
           git pull https://github.com/DuyPhuongkhtn/node43_ci_cd.git
           echo "Done"
       - name: Build mysql
