@@ -23,7 +23,7 @@ jobs:
     steps:
       - name: Check if folder source BE exists
         run: |
-          if [ -d "mode43_ci_cd" ];then
+          if [ -d "node43_ci_cd" ];then
             echo "Skip"
           else
             echo "Clone source code"
