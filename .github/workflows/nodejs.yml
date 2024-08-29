@@ -29,6 +29,7 @@ jobs:
           else
             echo "Folder node43_ci_cd exists. Pulling latest changes..."
             cd node43_ci_cd
+            git checkout .
             git pull origin main
           fi
       - name: Build MySQL
