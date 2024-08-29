@@ -15,7 +15,7 @@ fi
 # Build image mới
 echo "Building new Docker image..."
 cd node43_ci_cd
-sudo docker build -t node43 .
+sudo docker build . -t node43
 
 # Tạo container mới từ image
 echo "Creating new container..."
