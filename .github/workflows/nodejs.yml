@@ -38,7 +38,7 @@ jobs:
           echo "Done"
       - name: Build mysql
         run: |
-          cd node_ci_cd/.github/workflows
+          cd node43_ci_cd/.github/workflows
           sudo chmod +x build_mysql.sh
           build_mysql.sh
       - name: Build source BE
