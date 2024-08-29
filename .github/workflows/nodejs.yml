@@ -37,6 +37,8 @@ jobs:
           cd node43_ci_cd/.github/workflows
           sudo chmod +x ./build_mysql.sh
           ./build_mysql.sh
+        env:
+          MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
       - name: Set up MySQL
         run: |
           echo "Waiting for MySQL to be ready..."
