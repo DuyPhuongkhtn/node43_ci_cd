@@ -42,7 +42,7 @@ jobs:
           cd node43_ci_cd
 
           # Dừng và xóa container đã tồn tại nếu có
-          if [ "$(sudo docker ps -q -f name=node43)" ]; then
+          if [ "$(sudo docker ps -a -q -f name=node43)" ]; then
               echo "Stopping and removing existing container..."
               sudo docker stop node43
               sudo docker rm node43
