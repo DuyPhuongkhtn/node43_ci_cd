@@ -13,6 +13,7 @@ if [ "$(sudo docker images -q node43)" ]; then
 fi
 
 # Build image mới
+pwd
 echo "Building new Docker image..."
 cd node43_ci_cd
 sudo docker build . -t node43
