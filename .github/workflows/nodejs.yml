@@ -30,6 +30,7 @@ jobs:
           fi
       - name: Clone source code from GitHub
         run: |
+          pwd
           if [ ! -d "node43_ci_cd" ]; then
             echo "Folder node43_ci_cd does not exist. Cloning repository..."
             git clone https://github.com/DuyPhuongkhtn/node43_ci_cd.git
