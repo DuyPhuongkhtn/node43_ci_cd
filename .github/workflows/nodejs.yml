@@ -34,6 +34,7 @@ jobs:
           fi
       - name: Build MySQL
         run: |
+          pwd
           cd node43_ci_cd/.github/workflows
           sudo chmod +x ./build_mysql.sh
           ./build_mysql.sh
