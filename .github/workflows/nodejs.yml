@@ -23,25 +23,11 @@ jobs:
     steps:
       - name: Remove nested node43_ci_cd if it exists
         run: |
-          pwd
           cd ../../
           if [ -d "node43_ci_cd/node43_ci_cd" ]; then
             echo "Nested folder node43_ci_cd exists. Removing it..."
             sudo rm -rf node43_ci_cd/node43_ci_cd
           fi
-          echo "Current path is:"
-          pwd
-      - name: Print current path using pwd
-        run: |
-          echo "Current path is:"
-          pwd
-      - name: Remove outer node43_ci_cd if exists and nested directory was found
-        run: |
-          if [ -d "node43_ci_cd" ] && [ ! -d "node43_ci_cd/.git" ]; then
-            echo "Outer node43_ci_cd folder exists but it is not a valid git repository. Removing it..."
-            rm -rf node43_ci_cd
-          fi
-
       - name: Clone source code from GitHub
         run: |
           if [ ! -d "node43_ci_cd" ]; then
