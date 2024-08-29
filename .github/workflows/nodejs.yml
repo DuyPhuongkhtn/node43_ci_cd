@@ -37,6 +37,12 @@ jobs:
           cd node43_ci_cd/.github/workflows
           sudo chmod +x ./build_mysql.sh
           ./build_mysql.sh
+      - name: Create .env file with environment variables
+        run: |
+          echo "Creating .env file..."
+          cat <<EOF > node43_ci_cd/.env
+          DATABASE_URL=${{secrets.DATABASE_URL}}
+          EOF
       - name: Build Docker image and create container for source BE
         run: |
           cd node43_ci_cd/.github/workflows
