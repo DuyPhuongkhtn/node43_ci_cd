@@ -24,7 +24,7 @@ jobs:
       - name: Clone source code from github
         run: |
           echo "Start"
-          rm -rf node43
+          rm -rf node43_ci_cd
           git clone https://github.com/DuyPhuongkhtn/node43_ci_cd.git
           cd node43_ci_cd
           echo "Done"
