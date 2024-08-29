@@ -1,4 +1,4 @@
-CONTAINER_NAME=${{secrets.CONTAINER_NAME_SQL}}
+CONTAINER_NAME=mysql
 if [ "$(sudo docker ps -a -q -f name=^${CONTAINER_NAME}$)" ];then
     echo "Container $CONTAINER_NAME exists"
 else
