@@ -28,7 +28,6 @@ jobs:
           else
             echo "Clone source code"
             git clone https://github.com/DuyPhuongkhtn/node43_ci_cd.git
-            cd node43_ci_cd
           fi
       - name: Clone source code from github
         run: |
@@ -39,8 +38,8 @@ jobs:
       - name: Build mysql
         run: |
           cd node43_ci_cd/.github/workflows
-          sudo chmod +x build_mysql.sh
-          build_mysql.sh
+          sudo chmod +x ./build_mysql.sh
+          ./build_mysql.sh
       - name: Build source BE
         run: |
           # stop và remove container đã tồn tại
