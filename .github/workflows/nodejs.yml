@@ -26,7 +26,7 @@ jobs:
           pwd
           if [ -d "node43_ci_cd/node43_ci_cd" ]; then
             echo "Nested folder node43_ci_cd exists. Removing it..."
-            rm -rf node43_ci_cd/node43_ci_cd
+            sudo rm -rf node43_ci_cd/node43_ci_cd
           fi
           echo "Current path is:"
           pwd
