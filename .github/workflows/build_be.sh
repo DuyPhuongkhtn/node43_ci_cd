@@ -7,7 +7,8 @@ fi
 
 # Xóa image cũ nếu có
 if [ "$(sudo docker images -q node43)" ]; then
-    echo "Removing existing image..."
+    echo "Removing existing image and none tag..."
+    sudo docker images -f "dangling=true" -q | xargs -r sudo docker rmi
     sudo docker rmi node43
 fi
 
