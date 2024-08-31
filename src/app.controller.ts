@@ -14,4 +14,9 @@ export class AppController {
   healthCheck(): string {
     return "200"
   }
+
+  @Get("/welcome")
+  welcomeNode(): string {
+    return "Welcome NODEJS44"
+  }
 }
