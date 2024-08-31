@@ -7,99 +7,80 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model chat {
-  id      Int       @id @default(autoincrement())
-  user_id Int?
-  content String?   @db.VarChar(255)
-  room_id String?   @db.VarChar(50)
-  date    DateTime? @db.DateTime(0)
+model binh_luan {
+  id                 Int         @id @default(autoincrement())
+  ma_phong           Int?
+  ma_nguoi_binh_luan Int?
+  ngay_binh_luan     DateTime?   @db.Date
+  noi_dung           String?     @db.VarChar(1000)
+  sao_binh_luan      Int?
+  phong              phong?      @relation(fields: [ma_phong], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "binh_luan_ibfk_1")
+  nguoi_dung         nguoi_dung? @relation(fields: [ma_nguoi_binh_luan], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "binh_luan_ibfk_2")
+
+  @@index([ma_nguoi_binh_luan], map: "ma_nguoi_binh_luan")
+  @@index([ma_phong], map: "ma_phong")
 }
 
-model code {
-  id      BigInt    @id @unique(map: "id") @default(autoincrement()) @db.UnsignedBigInt
-  code    String?   @db.VarChar(50)
-  expired DateTime? @db.DateTime(0)
+model dat_phong {
+  id             Int         @id @default(autoincrement())
+  ma_phong       Int?
+  ngay_den       DateTime?   @db.Date
+  ngay_di        DateTime?   @db.Date
+  so_luong_khach Int?
+  ma_nguoi_dat   Int?
+  phong          phong?      @relation(fields: [ma_phong], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "dat_phong_ibfk_1")
+  nguoi_dung     nguoi_dung? @relation(fields: [ma_nguoi_dat], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "dat_phong_ibfk_2")
+
+  @@index([ma_nguoi_dat], map: "ma_nguoi_dat")
+  @@index([ma_phong], map: "ma_phong")
 }
 
-model permission {
-  permission_id   Int     @id @default(autoincrement())
-  permission_name String? @db.VarChar(100)
-  description     String? @db.VarChar(255)
+model nguoi_dung {
+  id        Int         @id @default(autoincrement())
+  full_name String?     @db.VarChar(100)
+  email     String?     @db.VarChar(100)
+  pass_word String?     @db.VarChar(100)
+  phone     String?     @db.VarChar(20)
+  birth_day String?     @db.VarChar(20)
+  gender    String?     @db.VarChar(20)
+  role      String?     @db.VarChar(50)
+  avatar    String?     @db.VarChar(1000)
+  binh_luan binh_luan[]
+  dat_phong dat_phong[]
 }
 
-model role {
-  role_id         Int     @id @default(autoincrement())
-  role_name       String? @db.VarChar(50)
-  list_permission String? @db.VarChar(255)
-  users           users[]
+model phong {
+  id        Int         @id @default(autoincrement())
+  ten_phong String?     @db.VarChar(200)
+  khach     Int?
+  phong_ngu Int?
+  giuong    Int?
+  phong_tam Int?
+  mo_ta     String?     @db.VarChar(1000)
+  gia_tien  Int?
+  may_giat  Boolean?
+  ban_la    Boolean?
+  tivi      Boolean?
+  dieu_hoa  Boolean?
+  wifi      Boolean?
+  bep       Boolean?
+  do_xe     Boolean?
+  ho_boi    Boolean?
+  ban_ui    Boolean?
+  ma_vi_tri Int?
+  hinh_anh  String?     @db.VarChar(1000)
+  binh_luan binh_luan[]
+  dat_phong dat_phong[]
+  vi_tri    vi_tri?     @relation(fields: [ma_vi_tri], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "phong_ibfk_1")
+
+  @@index([ma_vi_tri], map: "ma_vi_tri")
 }
 
-model users {
-  user_id       Int             @id @default(autoincrement())
-  full_name     String?         @db.VarChar(255)
-  email         String?         @unique(map: "email") @db.VarChar(255)
-  avatar        String?         @db.VarChar(255)
-  pass_word     String?         @db.VarChar(255)
-  face_app_id   String?         @db.VarChar(255)
-  role_id       Int?
-  refresh_token String?         @db.Text
-  role          role?           @relation(fields: [role_id], references: [role_id], onDelete: NoAction, onUpdate: NoAction, map: "users_ibfk_1")
-  video         video[]
-  video_comment video_comment[]
-  video_like    video_like[]
-
-  @@index([role_id], map: "role_id")
-}
-
-model video {
-  video_id      Int             @id @default(autoincrement())
-  video_name    String?         @db.VarChar(255)
-  thumbnail     String?         @db.VarChar(255)
-  description   String?         @db.Text
-  views         Int?
-  source        String?         @db.VarChar(255)
-  user_id       Int?
-  type_id       Int?
-  users         users?          @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "video_ibfk_1")
-  video_type    video_type?     @relation(fields: [type_id], references: [type_id], onDelete: NoAction, onUpdate: NoAction, map: "video_ibfk_2")
-  video_comment video_comment[]
-  video_like    video_like[]
-
-  @@index([type_id], map: "type_id")
-  @@index([user_id], map: "user_id")
-}
-
-model video_comment {
-  comment_id  Int       @id @default(autoincrement())
-  user_id     Int?
-  video_id    Int?
-  date_create DateTime? @db.DateTime(0)
-  content     String?   @db.Text
-  reply_list  String?   @db.VarChar(255)
-  timestamp   DateTime? @db.Timestamp(0)
-  users       users?    @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "video_comment_ibfk_1")
-  video       video?    @relation(fields: [video_id], references: [video_id], onDelete: NoAction, onUpdate: NoAction, map: "video_comment_ibfk_2")
-
-  @@index([user_id], map: "user_id")
-  @@index([video_id], map: "video_id")
-}
-
-model video_like {
-  like_id     Int       @id @default(autoincrement())
-  user_id     Int?
-  video_id    Int?
-  date_create DateTime? @db.DateTime(0)
-  dis_like    Boolean?
-  users       users?    @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "video_like_ibfk_1")
-  video       video?    @relation(fields: [video_id], references: [video_id], onDelete: NoAction, onUpdate: NoAction, map: "video_like_ibfk_2")
-
-  @@index([user_id], map: "user_id")
-  @@index([video_id], map: "video_id")
-}
-
-model video_type {
-  type_id   Int     @id @default(autoincrement())
-  type_name String? @db.VarChar(255)
-  icon      String? @db.VarChar(255)
-  video     video[]
+model vi_tri {
+  id         Int     @id @default(autoincrement())
+  ten_vi_tri String? @db.VarChar(100)
+  tinh_thanh String? @db.VarChar(100)
+  quoc_gia   String? @db.VarChar(100)
+  hinh_anh   String? @db.VarChar(1000)
+  phong      phong[]
 }

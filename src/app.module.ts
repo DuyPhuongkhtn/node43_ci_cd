@@ -1,19 +1,32 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { VideoModule } from './video/video.module';
 import { AuthModule } from './auth/auth.module';
-import { ConfigModule } from '@nestjs/config';
-import { JwtStrategy } from './strategy/jwt.strategy';
+import { UserModule } from './user/user.module';
+import {ConfigModule} from '@nestjs/config';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { cwd } from 'process';
+import { join } from 'path';
+import { LocationModule } from './location/location.module';
+import { RoomModule } from './room/room.module';
+import { BookingModule } from './booking/booking.module';
+import { CommentModule } from './comment/comment.module';
 
 @Module({
-  imports: [VideoModule, AuthModule, ConfigModule.forRoot({ isGlobal: true })],
+  imports: [
+    ConfigModule.forRoot({isGlobal: true}),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'public/img'),
+      serveRoot: "/public/img"
+    }),
+    AuthModule,
+    UserModule,
+    LocationModule,
+    RoomModule,
+    BookingModule,
+    CommentModule
+  ],
   controllers: [AppController],
-  providers: [AppService,JwtStrategy],
+  providers: [AppService],
 })
-export class AppModule { }
-// module gốc
-
-//  imports: khai báo module
-//  controllers: khai báo controller
-//  providers: khai báo service
+export class AppModule {}

@@ -1,8 +1,12 @@
-import { diskStorage } from "multer"
+import { diskStorage } from 'multer';
+import { extname } from 'path';
 
-export const getStorageOption = (destination: string) => {
+export const getStorageOptions = (destination: string) =>  {
     return diskStorage({
-        destination: process.cwd() + `/public/imgs/${destination}`,
-        filename: (req, file, callback) => callback(null, new Date().getTime() + "_" + file.originalname)
-    })
+        destination: `./public/img/${destination}`,
+        filename: (req, file, cb) => {
+            const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
+            cb(null, `${uniqueSuffix}${extname(file.originalname)}`);
+        },
+    });
 }
