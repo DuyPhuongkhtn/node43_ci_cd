@@ -62,6 +62,9 @@ jobs:
           echo "Creating .env file..."
           cat <<EOF > node43_ci_cd/.env
           DATABASE_URL=${{secrets.DATABASE_URL}}
+          SALT_OR_ROUNDS=${{secrets.SALT_OR_ROUNDS}}
+          SECRET_KEY=${{secrets.SECRET_KEY}}
+          EXPIRES_IN=${{secrets.EXPIRES_IN}}
           EOF
       - name: Build Docker image and create container for source BE
         run: |
