@@ -17,6 +17,6 @@ export class AppController {
 
   @Get("/welcome")
   welcomeNode(): string {
-    return "Welcome NODEJS44"
+    return "Welcome NODEJS47"
   }
 }
